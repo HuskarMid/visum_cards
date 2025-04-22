@@ -7,14 +7,14 @@ import { Post } from "../lib/types/post";
 import { useRouter } from "next/navigation";
 
 const Create = () => {
-    const {handleAddPost} = useData();
+    const {handleAddPost, posts} = useData();
     const router = useRouter();
     const [newPost, setNewPost] = useState<Partial<Post>>({ title: '', body: '' });
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const postWithId: Post = {
-            id: Date.now(),
+            id: posts.length + 1,
             userId: 1,
             title: newPost.title || '',
             body: newPost.body || ''
