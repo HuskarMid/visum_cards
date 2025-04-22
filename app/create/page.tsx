@@ -4,12 +4,12 @@ import s from "./page.module.scss";
 import { useData } from "../lib/hooks/useData";
 import { useState } from "react";
 import { Post } from "../lib/types/post";
-
+import { useRouter } from "next/navigation";
 
 const Create = () => {
     const {handleAddPost} = useData();
+    const router = useRouter();
     const [newPost, setNewPost] = useState<Partial<Post>>({ title: '', body: '' });
-    const [editingPost, setEditingPost] = useState<Post | null>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -20,6 +20,7 @@ const Create = () => {
             body: newPost.body || ''
         };
         handleAddPost(postWithId);
+        router.push('/');
     };
 
   return (<div className={s.main}>
@@ -37,9 +38,7 @@ const Create = () => {
             placeholder="Текст поста"
             required
           />
-          <button type="submit">
-            {editingPost ? 'Обновить пост' : 'Добавить пост'}
-          </button>
+          <button type="submit" onClick={handleSubmit}>Добавить пост</button>
         </form>
 
   </div>);
